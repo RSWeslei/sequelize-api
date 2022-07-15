@@ -22,7 +22,6 @@ const getById = async (req, res) => {
                 message: 'Informe um id válido para consulta'
             });
         }
-
         let livro = await Livro.findOne({
             where: {
                 id

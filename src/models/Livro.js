@@ -3,7 +3,6 @@ import { sequelize } from "../config/config";
 
 import Autor from "./Autor";
 import Categoria from "./Categoria";
-import Emprestimo from "./Emprestimo";
 
 const Livro = sequelize.define(
     'livros',
