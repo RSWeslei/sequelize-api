@@ -1,6 +1,7 @@
 import Emprestimo from "../models/Emprestimo";
 import EmprestimoLivro from "../models/EmprestimoLivro";
 import Livro from "../models/Livro";
+import Usuario from "../models/Usuario";
 import { sequelize } from "../config/config";
 import { Op } from 'sequelize'
 
@@ -199,12 +200,22 @@ const existente = async (req, res) => {
         })
         if (!emprestimos.length){
             return res.status(200).send({
+                titulo: livro.titulo,
+                emprestado: false,
                 msg: 'Este livro está disponivel!'
             })
         }
-        return res.status(400).send({
+        let usuario = await Usuario.findOne({
+          where: {
+            id: emprestimos[0].idUsuario
+          }
+        })
+        return res.status(200).send({
+            usuario: usuario.nome,
+            titulo: livro.titulo,
+            emprestado: true,
             msg: 'Este livro não está disponivel',
-            emprestimos
+            emprestimos: emprestimos
         })
     } catch (error) {
         return res.status(500).send(error)

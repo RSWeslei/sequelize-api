@@ -4,6 +4,7 @@ import morgan from 'morgan';
 import fs from 'fs';
 import path from 'path';
 import routes from './routes';
+import cors from 'cors'
 
 require('./models/index')
 
@@ -14,6 +15,16 @@ const accessLogStream = fs.createWriteStream(
   { flags: 'a' }
 );
 
+const corsOptions = {
+  origin: function (origin, callback) {
+    callback(null, true)
+  },
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
+  credentials: true
+}
+
+app.use(cors(corsOptions))
+
 app.use(morgan('combined', { stream: accessLogStream }));
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
@@ -23,6 +34,6 @@ app.use((req, res) => {
   res.status(404).send('Página não encontrada!')
 });
 
-app.listen(3000, () => {
-  console.log(`Servidor rodando na porta 3000!`);
+app.listen(3333, () => {
+  console.log(`Servidor rodando na porta 3333!`);
 });
