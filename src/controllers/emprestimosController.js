@@ -215,7 +215,7 @@ const existente = async (req, res) => {
             titulo: livro.titulo,
             emprestado: true,
             msg: 'Este livro não está disponivel',
-            emprestimos: emprestimos
+            emprestimos: emprestimos  
         })
     } catch (error) {
         return res.status(500).send(error)
